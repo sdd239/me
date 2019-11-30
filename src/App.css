@@ -1,32 +1,33 @@
 body {
-    font-family: 'Hind', sans-serif;
-    font-size: 15px;
-    line-height: 1.8em;
-    color: #989898;
-    font-weight: 300;
-    background: #f8f8f8;
+  font-family: 'Hind', sans-serif;
+  font-size: 15px;
+  line-height: 1.8em;
+  color: #989898;
+  font-weight: 300;
+  background: #f8f8f8;
+  margin: 0;
 }
 
 .MuiListItem-gutters {
-    padding-left: 0px;
+  padding-left: 0px;
 }
 
 .MuiBox-root.MuiBox-root-106 {
-    padding-bottom: 0px;
-    background-color: #f8f8f8 !important;
+  padding-bottom: 0px;
+  background-color: #f8f8f8 !important;
 }
 
 .MuiBox-root.MuiBox-root-294 {
-    padding-bottom: 0px;
-    background-color: #f8f8f8 !important;
+  padding-bottom: 0px;
+  background-color: #f8f8f8 !important;
 }
 
 .MuiBox-root.MuiBox-root-301 {
-    padding-bottom: 0px;
-    background-color: #f8f8f8 !important;
+  padding-bottom: 0px;
+  background-color: #f8f8f8 !important;
 }
 
 .MuiBox-root.MuiBox-root-336 {
-    padding-bottom: 0px;
-    background-color: #f8f8f8 !important;
+  padding-bottom: 0px;
+  background-color: #f8f8f8 !important;
 }
