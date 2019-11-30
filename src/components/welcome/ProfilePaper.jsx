@@ -114,7 +114,7 @@ export const ProfilePaper = ({ windowWidth }) => {
               SEPPE VAN DALEN
             </Typography>
             <Typography variant="h5" className={classes.subtitle}>
-              Good to have your here!
+              Good to have you here!
             </Typography>
             <br />
             <Box pb={4}>
