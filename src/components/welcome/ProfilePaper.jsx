@@ -3,7 +3,6 @@ import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
-import myImage from '../../assets/img/Me.jpg'
 import { makeStyles } from '@material-ui/styles'
 import Chip from '@material-ui/core/Chip'
 import Facebook from '@material-ui/icons/Facebook'
@@ -17,12 +16,10 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import ListItemText from '@material-ui/core/ListItemText'
 import Checkbox from '@material-ui/core/Checkbox'
 import IconButton from '@material-ui/core/IconButton'
-import CommentIcon from '@material-ui/icons/Comment'
 import EmailIcon from '@material-ui/icons/Email'
-import ListItemAvatar from '@material-ui/core/ListItemAvatar'
-import Avatar from '@material-ui/core/Avatar'
-import CodeIcon from '@material-ui/icons/Code'
-import Rating from '@material-ui/lab/Rating'
+
+import StackList from './stackList'
+
 //import GitHubIcon from '@material-ui/icons/GitHub'
 
 const profileText = {
@@ -35,24 +32,7 @@ const profileText = {
 }
 
 const welcomeText = [
-  'Hello, welcome to my website! My name is Seppe, I am born and raised in The Netherlands, Eindhoven. I lived in Eindhoven till I was 19 years old. I then decided to move to Los Angeles and study at Santa Monica College. If you would like to learn more about me, than you are on the right page!'
-]
-
-const stackFirst = [
-  { name: 'MERN', rating: 2, comment: 'Mongoose, Express, React, Nodejs' },
-  { name: 'ReactJs', rating: 2.5, comment: 'Including Redux and hooks' },
-  { name: 'NodeJs', rating: 2, comment: 'Used in MERN app' }
-]
-
-const stackSecond = [
-  { name: 'Material-ui', rating: 2.5, comment: 'Work very well with React' },
-  { name: 'JavaScript', rating: 2.5, comment: 'Strong knowledge but can alway improve' },
-  { name: 'Electron', rating: 2, comment: 'Developed Native app' }
-]
-
-const thirdStack = [
-  { name: 'Git', rating: 2.5, comment: 'Know basics and experience with Version control' },
-  { name: 'HTML / CSS', rating: 2.5, comment: 'Strong knowledge but can alway improve' }
+  "Hello, welcome to my app! My name is Seppe, I'm born and raised in The Netherlands, Eindhoven. I lived in Eindhoven till I was 19 years old. I then decided to move to Los Angeles to study Business Administation at Santa Monica College. If you would like to learn more about me, than you are on the right page!"
 ]
 
 const useStyles = makeStyles({
@@ -122,10 +102,9 @@ const links = [
   'https://www.google.com/search?q=best+city+to+live+in+the+world'
 ]
 
-export const ProfilePaper = () => {
+export const ProfilePaper = ({ windowWidth }) => {
   const classes = useStyles()
   const keysProfileText = Object.keys(profileText)
-
   return (
     <Paper className={classes.root}>
       <Grid container spacing={1}>
@@ -135,7 +114,7 @@ export const ProfilePaper = () => {
               SEPPE VAN DALEN
             </Typography>
             <Typography variant="h5" className={classes.subtitle}>
-              Good to have your here!
+              Good to have you here!
             </Typography>
             <br />
             <Box pb={4}>
@@ -144,7 +123,7 @@ export const ProfilePaper = () => {
             <Grid container spacing={1}>
               {keysProfileText.map(key => {
                 return (
-                  <Grid item xs={4}>
+                  <Grid item xs={windowWidth > 525 ? 4 : 6}>
                     <Typography variant="button" className={classes.quickInfo}>
                       {profileText[key]}
                     </Typography>
@@ -155,7 +134,7 @@ export const ProfilePaper = () => {
               })}
             </Grid>
             <Grid container>
-              <Grid item xs={4}>
+              <Grid item xs={windowWidth > 650 ? 4 : 12}>
                 <Box pt={2}>
                   <List>
                     {countriesLived.map((country, i) => {
@@ -163,17 +142,21 @@ export const ProfilePaper = () => {
 
                       return (
                         <ListItem key={country} role={undefined} dense>
-                          <ListItemIcon>
-                            <Checkbox
-                              edge="start"
-                              checked={i < 3 ? true : false}
-                              tabIndex={-1}
-                              disableRipple
-                              inputProps={{
-                                'aria-labelledby': labelId
-                              }}
-                            />
-                          </ListItemIcon>
+                          {windowWidth > 760 ? (
+                            <ListItemIcon>
+                              <Checkbox
+                                edge="start"
+                                checked={i < 3 ? true : false}
+                                tabIndex={-1}
+                                disableRipple
+                                inputProps={{
+                                  'aria-labelledby': labelId
+                                }}
+                              />
+                            </ListItemIcon>
+                          ) : (
+                            ''
+                          )}
 
                           <ListItemText
                             className={[
@@ -213,96 +196,8 @@ export const ProfilePaper = () => {
                   </List>
                 </Box>
               </Grid>
-              <Grid item xs={8}>
-                <Grid container className={classes.scroll} spacing={2}>
-                  <Grid item xs={4}>
-                    <List className={classes.root}>
-                      {stackFirst.map(sta => (
-                        <ListItem dense>
-                          <ListItemAvatar>
-                            <Avatar>
-                              <CodeIcon />
-                            </Avatar>
-                          </ListItemAvatar>
-                          <ListItemText
-                            primary={sta.name}
-                            secondary={
-                              <>
-                                <p className={classes.noMargin}>{sta.comment}</p>
-                                <Rating
-                                  name="read-only"
-                                  precision={0.5}
-                                  size="small"
-                                  value={sta.rating}
-                                  max={3}
-                                  readOnly
-                                />
-                              </>
-                            }
-                          />
-                        </ListItem>
-                      ))}
-                    </List>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <List className={classes.root}>
-                      {stackSecond.map(sta => (
-                        <ListItem dense>
-                          <ListItemAvatar>
-                            <Avatar>
-                              <CodeIcon />
-                            </Avatar>
-                          </ListItemAvatar>
-                          <ListItemText
-                            primary={sta.name}
-                            secondary={
-                              <>
-                                <p className={classes.noMargin}>{sta.comment}</p>
-                                <Rating
-                                  name="read-only"
-                                  size="small"
-                                  precision={0.5}
-                                  value={sta.rating}
-                                  max={3}
-                                  readOnly
-                                />
-                              </>
-                            }
-                          />
-                        </ListItem>
-                      ))}
-                    </List>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <List className={classes.root}>
-                      {thirdStack.map(sta => (
-                        <ListItem dense>
-                          <ListItemAvatar>
-                            <Avatar>
-                              <CodeIcon />
-                            </Avatar>
-                          </ListItemAvatar>
-                          <ListItemText
-                            primary={sta.name}
-                            secondary={
-                              <>
-                                <p className={classes.noMargin}>{sta.comment}</p>
-                                <Rating
-                                  name="read-only"
-                                  precision={0.5}
-                                  size="small"
-                                  value={sta.rating}
-                                  max={3}
-                                  readOnly
-                                />
-                              </>
-                            }
-                          />
-                        </ListItem>
-                      ))}
-                    </List>
-                  </Grid>
-                </Grid>
+              <Grid item xs={windowWidth > 650 ? 8 : 12}>
+                <StackList windowWidth={windowWidth} />
 
                 <Box>
                   <Chip

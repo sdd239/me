@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles, useTheme } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
@@ -12,6 +12,7 @@ import MenuBook from '@material-ui/icons/MenuBook'
 import Work from '@material-ui/icons/Work'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
+import SwipeableViews from 'react-swipeable-views'
 
 import { ProfilePaper } from '../welcome/ProfilePaper'
 import EduCards from '../education/cards'
@@ -53,16 +54,30 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     width: '100%',
     backgroundColor: theme.palette.background.paper
+  },
+  swipView: {
+    overflow: 'none'
   }
 }))
 
 export default function ScrollableTabsButtonPrevent() {
   const classes = useStyles()
-  const [value, setValue] = React.useState(0)
+  const [value, setValue] = useState(0)
 
   const handleChange = (event, newValue) => {
     setValue(newValue)
   }
+
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      setWindowWidth(window.innerWidth)
+      console.log(windowWidth)
+    })
+  }, [windowWidth])
+
+  const theme = useTheme()
 
   return (
     <div className={classes.root}>
@@ -74,34 +89,51 @@ export default function ScrollableTabsButtonPrevent() {
           scrollButtons="off"
           aria-label="scrollable prevent tabs example"
         >
-          <Tab icon={<Code />} label="Welcome" aria-label="Welcome" {...a11yProps(0)} />
-          <Tab icon={<MenuBook />} aria-label="Education" label="Education" {...a11yProps(1)} />
+          <Tab
+            icon={<Code />}
+            label={windowWidth < 600 ? '' : 'Welcome'}
+            aria-label="Welcome"
+            {...a11yProps(0)}
+          />
+          <Tab
+            icon={<MenuBook />}
+            label={windowWidth < 600 ? '' : 'Education'}
+            aria-label="Education"
+            {...a11yProps(1)}
+          />
           <Tab
             icon={<Work />}
+            label={windowWidth < 600 ? '' : 'Work Experience'}
             aria-label="Work experience"
-            label="Work Experience"
             {...a11yProps(2)}
           />
           <Tab
             icon={<SentimentVerySatisfied />}
+            label={windowWidth < 600 ? '' : 'About me'}
             aria-label="About me"
-            label="About me"
             {...a11yProps(3)}
           />
         </Tabs>
       </AppBar>
-      <TabPanel value={value} index={0}>
-        <ProfilePaper />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <EduCards />
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        <EducationSection />
-      </TabPanel>
-      <TabPanel value={value} index={3}>
-        <AboutMeSection />
-      </TabPanel>
+      <SwipeableViews
+        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+        index={value}
+        onChangeIndex={handleChange}
+        className={classes.swipView}
+      >
+        <TabPanel value={value} index={0}>
+          <ProfilePaper windowWidth={windowWidth} />
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <EduCards windowWidth={windowWidth} />
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          <EducationSection windowWidth={windowWidth} />
+        </TabPanel>
+        <TabPanel value={value} index={3}>
+          <AboutMeSection windowWidth={windowWidth} />
+        </TabPanel>
+      </SwipeableViews>
     </div>
   )
 }
